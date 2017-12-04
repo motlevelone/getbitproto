@@ -6,7 +6,7 @@ public class TitleScreen : MonoBehaviour {
 	public Fader fader;
 	public GameObject selectionScreen;
 
-	void Start () {
+	void OnEnable () {
 		fader.FadeIn ();
 	}
 
