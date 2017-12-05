@@ -223,6 +223,7 @@ public class GameManager : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         lastPlayer.GetBit();
         yield return new WaitForSeconds(1.5f);
+		lastPlayer.transform.SetAsFirstSibling ();
         crunchAnim.gameObject.SetActive(false);
 
         lastPlayer.CheckDeath(graveyard);
