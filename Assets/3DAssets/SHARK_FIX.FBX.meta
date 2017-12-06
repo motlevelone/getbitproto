@@ -1,0 +1,222 @@
+fileFormatVersion: 2
+guid: 1b422f8387e64e04abd58dc390184948
+timeCreated: 1512586128
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Bone006
+    100002: Bone010
+    100004: Bone012
+    100006: Congor hiu
+    100008: Fin L
+    100010: Fin L Bone
+    100012: Fin R
+    100014: Fin R Bone
+    100016: shark
+    100018: Shark Bone Body
+    100020: Shark mouth Bone
+    100022: Shark mouth bone end
+    100024: //RootNode
+    400000: Bone006
+    400002: Bone010
+    400004: Bone012
+    400006: Congor hiu
+    400008: Fin L
+    400010: Fin L Bone
+    400012: Fin R
+    400014: Fin R Bone
+    400016: shark
+    400018: Shark Bone Body
+    400020: Shark mouth Bone
+    400022: Shark mouth bone end
+    400024: //RootNode
+    4300000: shark
+    4300002: Fin R
+    4300004: Fin L
+    4300006: Congor hiu
+    7400000: Swim
+    7400002: Eat
+    9500000: //RootNode
+    13700000: Congor hiu
+    13700002: Fin L
+    13700004: Fin R
+    13700006: shark
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Swim
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 40
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Congor hiu
+        weight: 1
+      - path: Fin L
+        weight: 1
+      - path: Fin R
+        weight: 1
+      - path: shark
+        weight: 1
+      - path: Shark Bone Body
+        weight: 1
+      - path: Shark Bone Body/Bone010
+        weight: 1
+      - path: Shark Bone Body/Fin L Bone
+        weight: 1
+      - path: Shark Bone Body/Fin L Bone/Bone012
+        weight: 1
+      - path: Shark Bone Body/Fin R Bone
+        weight: 1
+      - path: Shark Bone Body/Fin R Bone/Bone006
+        weight: 1
+      - path: Shark Bone Body/Shark mouth Bone
+        weight: 1
+      - path: Shark Bone Body/Shark mouth Bone/Shark mouth bone end
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Eat
+      takeName: Take 001
+      firstFrame: 41
+      lastFrame: 70
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Congor hiu
+        weight: 1
+      - path: Fin L
+        weight: 1
+      - path: Fin R
+        weight: 1
+      - path: shark
+        weight: 1
+      - path: Shark Bone Body
+        weight: 1
+      - path: Shark Bone Body/Bone010
+        weight: 1
+      - path: Shark Bone Body/Fin L Bone
+        weight: 1
+      - path: Shark Bone Body/Fin L Bone/Bone012
+        weight: 1
+      - path: Shark Bone Body/Fin R Bone
+        weight: 1
+      - path: Shark Bone Body/Fin R Bone/Bone006
+        weight: 1
+      - path: Shark Bone Body/Shark mouth Bone
+        weight: 1
+      - path: Shark Bone Body/Shark mouth Bone/Shark mouth bone end
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
