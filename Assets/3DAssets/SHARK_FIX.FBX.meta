@@ -18,6 +18,7 @@ ModelImporter:
     100020: Shark mouth Bone
     100022: Shark mouth bone end
     100024: //RootNode
+    100026: shark 1
     400000: Bone006
     400002: Bone010
     400004: Bone012
@@ -31,6 +32,7 @@ ModelImporter:
     400020: Shark mouth Bone
     400022: Shark mouth bone end
     400024: //RootNode
+    400026: shark 1
     4300000: shark
     4300002: Fin R
     4300004: Fin L
@@ -42,6 +44,7 @@ ModelImporter:
     13700002: Fin L
     13700004: Fin R
     13700006: shark
+    13700008: shark 1
   materials:
     importMaterials: 1
     materialName: 0
@@ -76,7 +79,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -130,7 +133,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0

@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class PlayerStats : MonoBehaviour {
 
     public PlayerColor playerColor;
+	public Image playerIcon;
+	public Sprite[] icons;
     public Image[] cards;
     Color used = Color.gray;
     Color ready = Color.white;
@@ -17,11 +19,17 @@ public class PlayerStats : MonoBehaviour {
     int life;
     public Text lifeLabel;
     public GameObject youLabel;
+	public PlayerModel playerModel;
 
-    public void InitPlayer(bool realPlayer)
+    public void InitPlayer(bool realPlayer,int playerVariant)
     {
         gameObject.SetActive(true);
-        life = 4;
+		playerColor = (PlayerColor)playerVariant;
+		playerIcon.sprite = icons [playerVariant];
+		playerModel.playerColor = playerColor;
+		playerModel.gameObject.SetActive (false);
+		playerModel.gameObject.SetActive (true);
+        life = 1;
         lifeLabel.text = "" + life;
         selected = -1;
         InitCards();
@@ -65,8 +73,8 @@ public class PlayerStats : MonoBehaviour {
             selected = sel;
         }
         cardSelected.sprite = cardImages[selected];
-        cardSelectedAnim.SetInteger("State", 0);
         cardSelected.gameObject.SetActive(true);
+		cardSelectedAnim.SetInteger("State", 0);
     }
 
     public int GetSelected()
@@ -93,6 +101,7 @@ public class PlayerStats : MonoBehaviour {
     {
         transform.SetAsFirstSibling();
         cardSelectedAnim.SetInteger("State", 3);
+		playerModel.Forward ();
     }
 
     public void ReadyCards()
@@ -106,6 +115,7 @@ public class PlayerStats : MonoBehaviour {
 
     public void GetBit()
     {
+		playerModel.GetBit ();
         life--;
         lifeLabel.text = "" + life;
         InitCards(true);
@@ -116,6 +126,7 @@ public class PlayerStats : MonoBehaviour {
         if (life <= 0)
         {
             transform.SetParent(graveyard);
+			playerModel.gameObject.SetActive (false);
         }
     }
 

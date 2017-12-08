@@ -10,17 +10,17 @@ public class SelectionScreen : MonoBehaviour {
 
     void OnEnable()
     {
-        selectIcon.anchoredPosition = targetSelect = new Vector2(600,0);        
-        selIdx = -2;
+        selectIcon.anchoredPosition = targetSelect = new Vector2(1350,0);        
+        selIdx = 0;
 
     }
 
     public void MoveSelection(int delta)
     {
         selIdx += delta;
-        selIdx = selIdx < -2 ? -2 : selIdx;
-        selIdx = selIdx > 2 ? 2 : selIdx;
-        targetSelect = new Vector2(selIdx * -300,0);
+        selIdx = selIdx < 0 ? 0 : selIdx;
+        selIdx = selIdx > 9 ? 9 : selIdx;
+		targetSelect = new Vector2(1350+ (selIdx * -300),0);
     }
 
     void Update()
@@ -34,6 +34,6 @@ public class SelectionScreen : MonoBehaviour {
     public void ClickStart()
     {
         gameObject.SetActive(false);
-        manager.InitGame(selIdx+2);
+        manager.InitGame(selIdx);
     }
 }

@@ -5,25 +5,39 @@ using UnityEngine.UI;
 
 public enum PlayerColor
 {
-    RED,
-    BLUE,
-    GREEN,
-    ORANGE,
-    WHITE
+    RED01,
+	RED02,
+    BLUE01,
+	BLUE02,
+    GREEN01,
+	GREEN02,
+    ORANGE01,
+	ORANGE02,
+    WHITE01,
+	WHITE02
+}
+
+[System.Serializable]
+public struct CardSprites {
+	public Sprite[] cards;
 }
 
 public class GameManager : MonoBehaviour {
     public Fader fader;
     public GameObject titleScreen;
+	public Transform gameCamPos;
     public PopUp popup;
     public Transform allPlayer;
     public Transform graveyard;
     public PlayerStats[] playerStats;
+	public SharkModel sharkModel;
     public float selectTime;
     public GameObject timer;
     public Slider timeSlider;
     int player;
+	int playerVariant;
     public Image[] hands;
+	public CardSprites[] cardSprite;
     public Animator handSelectAnim;
     public Image handSelect;
     public GameObject arrow;
@@ -34,7 +48,8 @@ public class GameManager : MonoBehaviour {
 
     public void InitGame(int playerIdx)
     {
-        player = playerIdx;
+        player = playerIdx / 2;
+		playerVariant = playerIdx;
         gameOver = false;
         gameObject.SetActive(true);
         arrow.SetActive(false);
@@ -43,9 +58,19 @@ public class GameManager : MonoBehaviour {
         for (int i = 0; i < hands.Length; i++)
         {
             hands[i].gameObject.SetActive(playerStats[player].IsCardReady(i));
+			hands [i].sprite = cardSprite [player].cards [i];
         }
+		StartCoroutine (AnimateCam());
         StartCoroutine(ReadyGame());
     }
+
+	IEnumerator AnimateCam() {
+		while (!Quaternion.Equals(Camera.main.transform.localRotation,gameCamPos.localRotation)) {
+			Camera.main.transform.localRotation = Quaternion.Lerp (Camera.main.transform.localRotation,gameCamPos.localRotation,0.02f);
+			yield return null;
+		}
+	}
+
 
     IEnumerator ReadyGame()
     {
@@ -53,23 +78,25 @@ public class GameManager : MonoBehaviour {
         for (int i = 0; i < playerStats.Length; i++)
         {
             playerStats[i].transform.SetParent(allPlayer);
-            playerStats[i].InitPlayer(i==player);
+			playerStats[i].InitPlayer(i==player,i==player ? playerVariant : (i*2)+Random.Range(0,2));
             int idx = i;
             playerList.Add(idx);
         }
         for (int i = 0; i < playerStats.Length; i++)
         {
             int newIdx = Random.Range(0,playerList.Count);
-            playerList.Remove(newIdx);
+			playerStats[i].transform.SetSiblingIndex(playerList[newIdx]);
+			playerStats [i].playerModel.SetPosition (playerList[newIdx]);
+            playerList.RemoveAt(newIdx);
 
-            playerStats[i].transform.SetSiblingIndex(newIdx);
         }
+		sharkModel.SetSwim (allPlayer.childCount);
         EnableCards(false);
-        popup.ShowPopUp("READY");
+        popup.ShowPopUp(PopUpType.READY);
         yield return new WaitForSeconds(1f);
-        popup.ShowPopUp("SET");
+		popup.ShowPopUp(PopUpType.SET);
         yield return new WaitForSeconds(1f);
-        popup.ShowPopUp("GO!");
+		popup.ShowPopUp(PopUpType.GO);
         yield return new WaitForSeconds(1f);
         popup.HidePopUp();
 
@@ -78,6 +105,7 @@ public class GameManager : MonoBehaviour {
 
     void NextRound()
     {
+		sharkModel.SetSwim (allPlayer.childCount);
         if (!gameOver)
         {
             StartCoroutine(SelectCards());
@@ -162,7 +190,7 @@ public class GameManager : MonoBehaviour {
         yield return null;
         if (aDuplicates)
         {
-            popup.ShowPopUp("DUPLICATES WILL NOT CHANGE POSITION!", 50);
+			popup.ShowPopUp(PopUpType.DUPLICATES);
             yield return new WaitForSeconds(3f);
             popup.HidePopUp();
         }
@@ -204,13 +232,18 @@ public class GameManager : MonoBehaviour {
     {
         arrow.SetActive(true);
         yield return new WaitForSeconds(1f);
-        playerStats[playerIdx].Forward();
+		for (int i = 0; i < playerStats.Length; i++) {
+			if (playerStats [i].transform.GetSiblingIndex () < playerStats [playerIdx].transform.GetSiblingIndex ()) {
+				playerStats [i].playerModel.Backward ();
+			}
+		}
+		playerStats[playerIdx].Forward();
         yield return new WaitForSeconds(1f);
         arrow.SetActive(false);
         ForwardSingles(nextIdx);
     }
 
-    IEnumerator GetBit()
+	IEnumerator GetBit(bool lastMeal = false)
     {
         PlayerStats lastPlayer = allPlayer.GetChild(allPlayer.childCount-1).GetComponent<PlayerStats>();
         crunchAnim.gameObject.SetActive(true);
@@ -220,30 +253,55 @@ public class GameManager : MonoBehaviour {
             if (playerStats[i].IsAlive())
                 playerStats[i].ReadyCards();
         }
+		sharkModel.SetEat ();
         yield return new WaitForSeconds(0.5f);
         lastPlayer.GetBit();
         yield return new WaitForSeconds(1.5f);
-		lastPlayer.transform.SetAsFirstSibling ();
-        crunchAnim.gameObject.SetActive(false);
 
-        lastPlayer.CheckDeath(graveyard);
+		if (!lastMeal) {
 
-        if ((allPlayer.childCount <= 2) || (!playerStats[player].IsAlive()))
-            gameOver = true;
+			if (lastPlayer.IsAlive ()) {
+				for (int i = 0; i < playerStats.Length; i++) {
+					if (playerStats [i].transform.GetSiblingIndex () < lastPlayer.transform.GetSiblingIndex ()) {
+						playerStats [i].playerModel.Backward ();
+					}
+				}
+				lastPlayer.transform.SetAsFirstSibling ();
+				lastPlayer.playerModel.Forward ();
+			}
+			crunchAnim.gameObject.SetActive (false);
 
-        NextRound();
+			lastPlayer.CheckDeath (graveyard);
+			for (int i = 0; i < playerStats.Length; i++) {
+				playerStats [i].playerModel.SetPosition (playerStats [i].transform.GetSiblingIndex ());
+			}
+
+			if ((allPlayer.childCount <= 2) || (!playerStats [player].IsAlive ()))
+				gameOver = true;
+
+			NextRound ();
+		} else {
+			lastPlayer.transform.SetParent(graveyard);
+			lastPlayer.playerModel.gameObject.SetActive (false);
+			sharkModel.GoAway ();
+		}
     }    
 
     void GameEnd()
     {
-        if (playerStats[player].transform.GetSiblingIndex() == 0)
+		if ((playerStats[player].transform.GetSiblingIndex() == 0) && (playerStats[player].IsAlive()))
         {
-            popup.ShowPopUp("YOU WIN!");
+			popup.ShowPopUp(PopUpType.WIN);
         }
         else
         {
-            popup.ShowPopUp("YOU LOSE!");
+			popup.ShowPopUp(PopUpType.LOSE);
         }
+		if (allPlayer.childCount == 2) {
+			PlayerStats firstPlayer = allPlayer.GetChild (0).GetComponent<PlayerStats> ();
+			StartCoroutine(GetBit (true));
+			firstPlayer.playerModel.SetWin ();
+		}
         popup.actionButton.onClick.AddListener(() => { BackToHome(); });
     }
 

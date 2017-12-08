@@ -5,9 +5,11 @@ using UnityEngine;
 public class TitleScreen : MonoBehaviour {
 	public Fader fader;
 	public GameObject selectionScreen;
+	public Transform startCamPos;
 
 	void OnEnable () {
 		fader.FadeIn ();
+		Camera.main.transform.localRotation = startCamPos.localRotation;
 	}
 
 	public void ClickStart() {
